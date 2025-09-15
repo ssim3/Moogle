@@ -1,2 +1,2 @@
-# telenotes
+# Moogle
 Notes for Telegram.
