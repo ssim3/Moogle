@@ -5,8 +5,8 @@ def start_message(username: str):
     message = rf"""
 Welcome to **TeleNotes** @{username}! 👋
 
-Send me your notes in the following format and I will save them for you:
->/note [note title] [note content]
+To create a note, begin by typing a note in this format:
+>/note [note title]
 
 For example:
 >/note Meeting Discuss project roadmap with team
@@ -14,7 +14,7 @@ For example:
 To organize your notes into folders, add a path like this:
 >/note Work/Meetings Meeting Discuss project roadmap
 
-📁 View all notes: 
+📁 View all notes and folders: 
 >/list
 
 📁 View notes in a folder: 
@@ -24,7 +24,7 @@ To organize your notes into folders, add a path like this:
 >/delete [note path]
 
 📁 Create a folder: 
->/folder
+>/folder [folder name]
 
 The full list of commands is available by sending /help
 """
