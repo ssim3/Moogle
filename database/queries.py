@@ -18,6 +18,25 @@ def create_user(user: User):
         pass
 
 
+# --- Entity Queries ---
+def get_entities(telegram_id: int, parent_id: str):
+    
+    """ Returns all the entities in specified folder parent_id """
+
+    filter = {
+        "telegram_id": telegram_id,
+        "parent_id": parent_id,
+    }
+
+    results_count = entities.count_documents(filter)
+    results = entities.find(filter)
+
+    if not results:
+        return False
+    
+    return results, results_count
+
+
 # --- Folders Queries ---
 def create_folder(telegram_id: int, name: str, parent_id: str) -> bool:
 
