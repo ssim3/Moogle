@@ -43,7 +43,11 @@ def create_note(telegram_id: int, title: str, content: str, parent_id: str) -> b
 
 
 # --- Validation Queries ---
-def validate_path(user_id: str, path: str) -> Union[None, ObjectId, bool]:
+def validate_path(telegram_id: int, path: str) -> Union[None, ObjectId, bool]:
+    """
+    Validates whether the path a user enters exists.
+    Returns the parent folder's ObjectId, None for root folder, and False if it doesn't exist.
+    """
 
     if path == "/":
         return None
@@ -57,7 +61,7 @@ def validate_path(user_id: str, path: str) -> Union[None, ObjectId, bool]:
 
         folder = entities.find_one(
             {
-                "telegram_id": user_id,
+                "telegram_id": telegram_id,
                 "name": part,
                 "type": "folder",
                 "parent_id": parent_id,
@@ -71,3 +75,22 @@ def validate_path(user_id: str, path: str) -> Union[None, ObjectId, bool]:
         parent_id = folder["_id"]
 
     return parent_id  # returns the folder id where the note should be created
+
+
+def check_duplicate_entity(
+    telegram_id: int, parent_id: ObjectId, file_name: str, type: str
+):
+
+    entity = entities.find_one(
+        {
+            "telegram_id": telegram_id,
+            "name": file_name,
+            "parent_id": parent_id,
+            "type": type,
+        }
+    )
+
+    if entity:
+        return False  # Exists a duplicate
+
+    return True

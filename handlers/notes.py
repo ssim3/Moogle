@@ -1,5 +1,5 @@
 from database.models import Entity
-from database.queries import validate_path, create_note
+from database.queries import validate_path, create_note, check_duplicate_entity
 from telegram import Update
 from telegram.ext import (
     ContextTypes,
@@ -45,6 +45,7 @@ async def content(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def path(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Capture path and save note"""
 
+    title = context.user_data["title"]
     telegram_id = update.effective_user.id
     path = update.message.text.strip()
 
@@ -58,9 +59,17 @@ async def path(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("⚠️ Path does not exist! Please try again.")
         return PATH
 
+    # Validates whether file already exists or not
+    if check_duplicate_entity(telegram_id, parent_id, title, type="note") is False:
+        await update.message.reply_text(
+            f"⚠️ Note **{context.user_data['title']}** already exists in **{path}**!\n\nPlease enter another Path.",
+            parse_mode="Markdown",
+        )
+        return PATH
+
     result = create_note(
         telegram_id=telegram_id,
-        title=context.user_data["title"],
+        title=title,
         content=context.user_data["content"],
         parent_id=parent_id,
     )
