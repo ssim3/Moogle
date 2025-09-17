@@ -57,7 +57,9 @@ async def path(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return PATH
 
     result = create_folder(
-        telegram_id=telegram_id, name=folder_name, parent_id=parent_id,
+        telegram_id=telegram_id,
+        name=folder_name,
+        parent_id=parent_id,
     )
 
     if result:
@@ -83,6 +85,8 @@ def get_folder_handler():
 
     return ConversationHandler(
         entry_points=[CommandHandler("folder", folder)],
-        states={PATH: [MessageHandler(filters.TEXT & ~filters.COMMAND, path)],},
+        states={
+            PATH: [MessageHandler(filters.TEXT & ~filters.COMMAND, path)],
+        },
         fallbacks=[CommandHandler("cancel", cancel)],
     )

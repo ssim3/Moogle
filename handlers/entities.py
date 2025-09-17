@@ -9,6 +9,7 @@ from telegram.ext import (
 
 from database.queries import get_entities
 
+
 async def list(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # cwd represents the ObjectID of the folder that the user is currently inside
@@ -30,8 +31,9 @@ async def list(update: Update, context: ContextTypes.DEFAULT_TYPE):
     message = f"*📂 Directory:* `{'root' if cwd is None else cwd}`\n\n"
 
     for i, entity in enumerate(entities, start=1):
-        icon = '📁' if entity['type'] == 'folder' else '📝'
-        name = f"`{entity['name']}`" if entity['type'] == 'folder' else entity['name'] # This is so fucking dumb but I need to use `` to have code highlighting to differentiate folders and notes
+        icon = "📁" if entity["type"] == "folder" else "📝"
+        name = f"`{entity['name']}`" if entity["type"] == "folder" else entity["name"] # This is so fucking dumb but I need to use `` to have code highlighting to differentiate folders and notes
+        
         message += f"\t{i}. {icon} {name}\n"
 
     message += "\n_Select a number to open a folder or view a note._"

@@ -20,8 +20,7 @@ def create_user(user: User):
 
 # --- Entity Queries ---
 def get_entities(telegram_id: int, parent_id: str):
-    
-    """ Returns all the entities in specified folder parent_id """
+    """Returns all the entities in specified folder parent_id"""
 
     filter = {
         "telegram_id": telegram_id,
@@ -33,7 +32,7 @@ def get_entities(telegram_id: int, parent_id: str):
 
     if not results:
         return False
-    
+
     return results, results_count
 
 
