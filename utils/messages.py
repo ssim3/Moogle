@@ -1,6 +1,7 @@
 import telegramify_markdown
 from telegramify_markdown import customize
 
+
 def start_message(username: str):
     message = rf"""
 Welcome to **TeleNotes** @{username}! 👋
@@ -28,9 +29,7 @@ To organize your notes into folders, add a path like this:
 
 The full list of commands is available by sending /help
 """
-    
-    message_mv2 = telegramify_markdown.markdownify(
-        message
-    )
+
+    message_mv2 = telegramify_markdown.markdownify(message)
 
     return message_mv2
