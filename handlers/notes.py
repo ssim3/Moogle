@@ -44,12 +44,14 @@ async def content(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def path(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Capture path and save note"""
+
     telegram_id = update.effective_user.id
     path = update.message.text.strip()
 
-    # TODO:
-    # - validation to make sure that PATH exists, if does not exist create a new folder?
-    # - Implement mongodb insertion of note
+    # Validate the path that user enters.
+    # - Returns None if root path is specified
+    # - Returns the ObjectID of the folder the note will belong to
+    # - Returns FALSE if the path does not exists
     parent_id = validate_path(update.effective_user.id, path)
 
     if parent_id is False:
